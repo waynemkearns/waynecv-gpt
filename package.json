@@ -1,7 +1,7 @@
 {
   "name": "waynecv-chatbot",
   "version": "1.0.0",
-  "description": "CV chatbot site for Wayne Kearns with Netlify functions",
+  "description": "Wayne Kearns CV Chatbot with Netlify Functions",
   "dependencies": {
     "node-fetch": "^2.6.7"
   }
