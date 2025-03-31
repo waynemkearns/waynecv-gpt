@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 
 exports.handler = async (event) => {
+  console.log("Function triggered. Key present:", !!process.env.OPENAI_API_KEY);
   try {
     const { prompt } = JSON.parse(event.body);
 
