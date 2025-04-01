@@ -292,7 +292,12 @@ Education:
         const res = await fetch("/.netlify/functions/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt: `${cvData}\n\nQuestion: ${userMessage}` })
+          body: JSON.stringify({ prompt: `You are a helpful assistant that answers questions strictly based on the CV information provided below. If a question is unrelated to this CV, respond with: 'I'm here to help only with information about Wayne Kearns' CV.'
+
+CV:
+${cvData}
+
+Question: ${userMessage}` })
         });
         const data = await res.json();
         chat.innerHTML += `<p><strong>Bot:</strong> ${data.response || "No response."}</p>`;
