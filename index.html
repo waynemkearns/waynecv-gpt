@@ -153,32 +153,11 @@
       padding: 10px;
       font-weight: bold;
     }
-    .chat-body {
-      padding: 10px;
-      flex: 1;
-      overflow-y: auto;
-      font-size: 14px;
-    }
-    .chatbot input {
-      border: none;
-      border-top: 1px solid #eee;
-      padding: 10px;
-      width: 100%;
-      box-sizing: border-box;
-      font-size: 14px;
-    }
     .chat-suggestions {
-      position: fixed;
-      bottom: 440px;
-      right: 20px;
-      width: 90%;
-      max-width: 320px;
       background: #ffffff;
       padding: 10px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       font-size: 13px;
-      z-index: 997;
+      border-bottom: 1px solid #eee;
     }
     .chat-suggestions ul {
       list-style: none;
@@ -195,6 +174,20 @@
     }
     .chat-suggestions li:hover {
       text-decoration: underline;
+    }
+    .chat-body {
+      padding: 10px;
+      flex: 1;
+      overflow-y: auto;
+      font-size: 14px;
+    }
+    .chatbot input {
+      border: none;
+      border-top: 1px solid #eee;
+      padding: 10px;
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 14px;
     }
   </style>
 </head>
@@ -240,18 +233,17 @@
     </main>
   </div>
 
-  <div class="chat-suggestions" id="chatSuggestions" style="display: none;">
-    <p><strong>Try asking:</strong></p>
-    <ul>
-      <li onclick="setExample('Where did Wayne study?')">Where did Wayne study?</li>
-      <li onclick="setExample('What experience does Wayne have with AI?')">What experience does Wayne have with AI?</li>
-      <li onclick="setExample('Tell me about Wayne\'s role at Novartis.')">Tell me about Wayne's role at Novartis.</li>
-      <li onclick="setExample('What are Wayne’s top skills?')">What are Wayne’s top skills?</li>
-      <li onclick="setExample('What did Wayne study at UCD Smurfit?')">What did Wayne study at UCD Smurfit?</li>
-    </ul>
-  </div>
-
   <div class="chatbot" id="chatbot">
+    <div class="chat-suggestions">
+      <p><strong>Try asking:</strong></p>
+      <ul>
+        <li onclick="setExample('Where did Wayne study?')">Where did Wayne study?</li>
+        <li onclick="setExample('What experience does Wayne have with AI?')">What experience does Wayne have with AI?</li>
+        <li onclick="setExample('Tell me about Wayne\'s role at Novartis.')">Tell me about Wayne's role at Novartis.</li>
+        <li onclick="setExample('What are Wayne’s top skills?')">What are Wayne’s top skills?</li>
+        <li onclick="setExample('What did Wayne study at UCD Smurfit?')">What did Wayne study at UCD Smurfit?</li>
+      </ul>
+    </div>
     <header>Wayne’s CV Assistant</header>
     <div class="chat-body" id="chat"></div>
     <input id="userInput" placeholder="Ask about Wayne's CV..." onkeydown="if(event.key === 'Enter') sendMessage()" />
@@ -278,12 +270,8 @@ Education:
 - 1994: Instrument Physics – Galway RTC`;
 
     function toggleChatbot() {
-  const bot = document.getElementById("chatbot");
-  const suggestions = document.getElementById("chatSuggestions");
-  const isVisible = bot.style.display === "none" || !bot.style.display;
-  bot.style.display = isVisible ? "flex" : "none";
-  if (suggestions) suggestions.style.display = isVisible ? "block" : "none";
-}
+      const bot = document.getElementById("chatbot");
+      bot.style.display = bot.style.display === "flex" ? "none" : "flex";
     }
 
     function toggleTheme() {
@@ -309,12 +297,9 @@ Education:
         const res = await fetch("/.netlify/functions/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt: `You are a helpful assistant that answers questions strictly based on the CV information provided below. If a question is unrelated to this CV, respond with: 'I'm here to help only with information about Wayne Kearns' CV.'
-
-CV:
-${cvData}
-
-Question: ${userMessage}` })
+          body: JSON.stringify({
+            prompt: `You are a helpful assistant that answers questions strictly based on the CV information provided below. If a question is unrelated to this CV, respond with: 'I'm here to help only with information about Wayne Kearns' CV.'\n\nCV:\n${cvData}\n\nQuestion: ${userMessage}`
+          })
         });
         const data = await res.json();
         chat.innerHTML += `<p><strong>Bot:</strong> ${data.response || "No response."}</p>`;
