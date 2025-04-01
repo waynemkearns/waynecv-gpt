@@ -19,28 +19,42 @@
     <header>
         <h1>Wayne Kearns</h1>
         <p>Senior IT Leader</p>
+        <br>
         <img src="profile.jpg" alt="Wayne Kearns" style="width:120px;border-radius:60px;margin-top:10px;"><br>
         <a href="https://linkedin.com/in/waynekearns" target="_blank" style="color:#fff;text-decoration:underline;">LinkedIn Profile</a>
     </header>
+
     <section>
         <h2>About Me</h2>
         <p>Senior IT Leader with experience in technology strategy, IT governance, and compliance across multinational companies. He led projects at FastTrack RTW (2023–2025) and Novartis (2015–2023), including AI-driven insurance tech and global infrastructure programs.</p>
     </section>
+
     <section>
         <h2>Experience</h2>
-        <p><strong>FastTrack RTW</strong> - Head of Implementation (2023–2025)<br><strong>Novartis</strong> - Various Leadership Roles (2015–2023)</p>
+        <p><strong>FastTrack RTW</strong> - Head of Implementation (2023–2025)<br>
+        <strong>Novartis</strong> - Various Leadership Roles (2015–2023)</p>
     </section>
+
     <section>
         <h2>Education</h2>
-        <p>INSEAD, UCD Smurfit, DIT, Griffith College, Galway RTC</p>
+        <ul>
+            <li>INSEAD – Advanced Management Programme</li>
+            <li>UCD Smurfit Business School – Executive Education (Digital Innovation)</li>
+            <li>Dublin Institute of Technology – BSc in Computer Science</li>
+            <li>Griffith College – Diploma in Business and IT</li>
+            <li>Galway RTC – Certificate in Technical Support</li>
+        </ul>
     </section>
+
     <section>
         <h2>Skills</h2>
         <p>Strategic Planning, Change Management, ITSM, Agile, AI Fundamentals</p>
     </section>
+
     <footer>
         <p>&copy; 2025 Wayne Kearns</p>
     </footer>
+
     <div class="chatbot" id="chatbot">
         <p id="welcomeMessage" class="fade-in"><strong>Bot:</strong> Hi! I'm your CV assistant. Ask me anything about Wayne Kearns' experience, education, or skills.</p>
         <div id="chat" style="max-height:200px;overflow-y:auto;margin-bottom:10px;"></div>
@@ -48,19 +62,41 @@
         <button onclick="sendMessage()">Send</button>
     </div>
     <button class="chatbot-toggle" onclick="toggleChatbot()">💬</button>
+
     <script>
-        const cvData = `Wayne Kearns is a Senior IT Leader with experience in technology strategy, IT governance, and security compliance across multinational companies. He led major programs at FastTrack RTW and Novartis. His education includes INSEAD, UCD Smurfit, DIT, Griffith College, and Galway RTC.`;
+        const cvData = `Wayne Kearns is a Senior IT Leader with extensive experience in technology strategy, IT governance, and security compliance across multinational organizations. He has led major programs at FastTrack RTW and Novartis. His education includes:
+- INSEAD – Advanced Management Programme
+- UCD Smurfit Business School – Executive Education (Digital Innovation)
+- Dublin Institute of Technology – BSc in Computer Science
+- Griffith College – Diploma in Business and IT
+- Galway RTC – Certificate in Technical Support.`;
 
         async function sendToGPT(question) {
             try {
                 const response = await fetch("/.netlify/functions/chat", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ prompt: `${cvData}\n\nQuestion: ${question}` })
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        prompt: `${cvData}
+
+Question: ${question}`
+                    })
                 });
-                if (!response.ok) throw new Error("Server error");
+
+                if (!response.ok) {
+                    console.error("Server responded with status:", response.status);
+                    throw new Error("Server error");
+                }
+
                 const data = await response.json();
-                return data.response || "No answer.";
+                if (!data.response) {
+                    console.error("No 'response' field in API reply:", data);
+                    throw new Error("Malformed response");
+                }
+
+                return data.response;
             } catch (error) {
                 console.error("Chatbot error:", error);
                 return "Sorry, I couldn’t reach the server. Please try again later.";
