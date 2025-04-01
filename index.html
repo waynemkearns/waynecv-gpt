@@ -11,8 +11,14 @@
         footer { background: #f4f4f4; color: #333; text-align: center; padding: 10px; }
         .chatbot { position: fixed; bottom: 90px; right: 20px; background: #eee; padding: 10px; border-radius: 10px; width: 300px; max-height: 400px; overflow-y: auto; display: block; }
         .chatbot-toggle { position: fixed; bottom: 20px; right: 20px; background: #333; color: #fff; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 24px; cursor: pointer; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .fade-in { animation: fadeIn 1s ease-in-out; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
     </style>
 </head>
 <body>
@@ -38,11 +44,16 @@
     <section>
         <h2>Education</h2>
         <ul>
-            <li>INSEAD – Advanced Management Programme</li>
-            <li>UCD Smurfit Business School – Executive Education (Digital Innovation)</li>
-            <li>Dublin Institute of Technology – BSc in Computer Science</li>
-            <li>Griffith College – Diploma in Business and IT</li>
-            <li>Galway RTC – Certificate in Technical Support</li>
+            <li>2025 – Professional Certificate, Strategy in the Age of AI and Digital Disruption – INSEAD</li>
+            <li>2023 – MSc in Business (Leadership & Management Practice) – UCD Michael Smurfit Graduate Business School</li>
+            <li>2022 – Professional Diploma in Leadership Development – UCD Michael Smurfit Graduate Business School</li>
+            <li>2021 – Professional Diploma in Organisational Change and Transformation – UCD Michael Smurfit Graduate Business School</li>
+            <li>2018 – Professional Diploma in Strategic Growth (Biotech & Pharma) – UCD Michael Smurfit Graduate Business School</li>
+            <li>2012 – MSc in Technology and Innovation Management – Dublin Institute of Technology</li>
+            <li>2011 – Postgraduate Diploma in Management of Technology – Dublin Institute of Technology</li>
+            <li>2009 – Postgraduate Diploma in International Sales – Dublin Institute of Technology</li>
+            <li>2002 – B.A. in Business Studies – Griffith College Dublin</li>
+            <li>1994 – National Certificate in Instrument Physics – Galway Regional Technical College</li>
         </ul>
     </section>
 
@@ -65,11 +76,16 @@
 
     <script>
         const cvData = `Wayne Kearns is a Senior IT Leader with extensive experience in technology strategy, IT governance, and security compliance across multinational organizations. He has led major programs at FastTrack RTW and Novartis. His education includes:
-- INSEAD – Advanced Management Programme
-- UCD Smurfit Business School – Executive Education (Digital Innovation)
-- Dublin Institute of Technology – BSc in Computer Science
-- Griffith College – Diploma in Business and IT
-- Galway RTC – Certificate in Technical Support.`;
+- 2025: Professional Certificate, Strategy in the Age of AI and Digital Disruption – INSEAD
+- 2023: MSc in Business (Leadership & Management Practice) – UCD Michael Smurfit Graduate Business School
+- 2022: Professional Diploma in Leadership Development – UCD Michael Smurfit Graduate Business School
+- 2021: Professional Diploma in Organisational Change and Transformation – UCD Michael Smurfit Graduate Business School
+- 2018: Professional Diploma in Strategic Growth (Biotech & Pharma) – UCD Michael Smurfit Graduate Business School
+- 2012: MSc in Technology and Innovation Management – Dublin Institute of Technology
+- 2011: Postgraduate Diploma in Management of Technology – Dublin Institute of Technology
+- 2009: Postgraduate Diploma in International Sales – Dublin Institute of Technology
+- 2002: B.A. in Business Studies – Griffith College Dublin
+- 1994: National Certificate in Instrument Physics – Galway Regional Technical College.`;
 
         async function sendToGPT(question) {
             try {
