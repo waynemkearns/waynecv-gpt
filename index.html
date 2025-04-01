@@ -4,9 +4,249 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wayne Kearns - CV</title>
-  <!-- Full style and JavaScript already reviewed from the open canvas -->
+  <style>
+    :root {
+      --bg-light: #f7f9fb;
+      --bg-dark: #1e1e1e;
+      --text-light: #333;
+      --text-dark: #f0f0f0;
+      --card-bg-light: #fff;
+      --card-bg-dark: #2a2a2a;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      transition: background-color 0.3s, color 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .dark-mode {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+    .container {
+      display: flex;
+      max-width: 1200px;
+      width: 100%;
+      padding: 40px 20px;
+      box-sizing: border-box;
+      gap: 40px;
+    }
+    .sidebar {
+      flex: 1;
+      background: var(--card-bg-light);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      transition: background 0.3s;
+    }
+    .dark-mode .sidebar {
+      background: var(--card-bg-dark);
+    }
+    .sidebar img {
+      width: 120px;
+      border-radius: 60px;
+      margin-bottom: 10px;
+      transition: transform 0.3s;
+    }
+    .sidebar img:hover {
+      transform: scale(1.05);
+    }
+    .sidebar h1 {
+      margin: 10px 0 5px;
+      font-size: 1.5em;
+    }
+    .sidebar p {
+      margin: 0;
+      font-style: italic;
+      color: #666;
+    }
+    .sidebar a {
+      color: #0077b5;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .main {
+      flex: 2;
+      background: var(--card-bg-light);
+      border-radius: 12px;
+      padding: 20px 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: background 0.3s;
+    }
+    .dark-mode .main {
+      background: var(--card-bg-dark);
+    }
+    .main h2 {
+      color: #1a1a1a;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 5px;
+      margin-top: 30px;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    footer {
+      text-align: center;
+      font-size: 14px;
+      color: #aaa;
+      padding: 20px;
+    }
+    .chatbot-toggle, .theme-toggle {
+      position: fixed;
+      bottom: 20px;
+      background: #0077b5;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 999;
+    }
+    .chatbot-toggle {
+      right: 20px;
+    }
+    .theme-toggle {
+      left: 20px;
+    }
+    .chatbot {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      width: 320px;
+      max-height: 400px;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 998;
+      transition: opacity 0.3s ease-in-out;
+    }
+    .chatbot header {
+      background: #0077b5;
+      color: white;
+      padding: 10px;
+      font-weight: bold;
+    }
+    .chat-body {
+      padding: 10px;
+      flex: 1;
+      overflow-y: auto;
+      font-size: 14px;
+    }
+    .chatbot input {
+      border: none;
+      border-top: 1px solid #eee;
+      padding: 10px;
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
-  <!-- Includes sidebar, expanded experience, full education, chatbot, and dark mode -->
+  <div class="container">
+    <aside class="sidebar">
+      <img src="profile.jpg" alt="Wayne Kearns">
+      <h1>Wayne Kearns</h1>
+      <p>Senior IT Leader</p>
+      <a href="https://linkedin.com/in/waynekearns" target="_blank">LinkedIn Profile</a>
+    </aside>
+    <main class="main">
+      <section>
+        <h2>About Me</h2>
+        <p>Senior IT Leader with expertise in digital transformation, technology strategy, IT governance, and compliance in multinational corporations.</p>
+      </section>
+      <section>
+        <h2>Experience</h2>
+        <p><strong>FastTrack RTW (2023–2025)</strong><br>
+        Head of Implementation – Led the planning, development, and rollout of AI-powered chatbot and automated data intake systems for U.S. disability insurance clients. Oversaw technical teams and liaised with senior stakeholders to ensure compliance and efficiency. Integrated advanced data collection tools to streamline claim processing and improve user experience.</p>
+        <p><strong>Novartis (2015–2023)</strong><br>
+        Held multiple senior roles leading IT and business strategy initiatives across global divisions. Managed international teams and drove enterprise-wide transformations in cloud migration, cybersecurity, operational performance, and digital analytics. Partnered with regulatory and legal functions to ensure IT governance alignment across 60+ countries.</p>
+      </section>
+      <section>
+        <h2>Education</h2>
+        <ul>
+          <li>2025 – Professional Certificate, Strategy in the Age of AI and Digital Disruption – INSEAD</li>
+          <li>2023 – MSc in Business (Leadership & Management Practice) – UCD Michael Smurfit Graduate Business School</li>
+          <li>2022 – Professional Diploma in Leadership Development – UCD Michael Smurfit Graduate Business School</li>
+          <li>2021 – Professional Diploma in Organisational Change and Transformation – UCD Michael Smurfit Graduate Business School</li>
+          <li>2018 – Professional Diploma in Strategic Growth (Biotech & Pharma) – UCD Michael Smurfit Graduate Business School</li>
+          <li>2012 – MSc in Technology and Innovation Management – Dublin Institute of Technology</li>
+          <li>2011 – Postgraduate Diploma in Management of Technology – Dublin Institute of Technology</li>
+          <li>2009 – Postgraduate Diploma in International Sales – Dublin Institute of Technology</li>
+          <li>2002 – B.A. in Business Studies – Griffith College Dublin</li>
+          <li>1994 – National Certificate in Instrument Physics – Galway Regional Technical College</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Skills</h2>
+        <p>Strategic Planning, Change Management, ITSM, Agile, AI Fundamentals</p>
+      </section>
+    </main>
+  </div>
+  <div class="chatbot" id="chatbot">
+    <header>Wayne’s CV Assistant</header>
+    <div class="chat-body" id="chat"></div>
+    <input id="userInput" placeholder="Ask about Wayne's CV..." onkeydown="if(event.key === 'Enter') sendMessage()" />
+  </div>
+  <button class="chatbot-toggle" onclick="toggleChatbot()">💬</button>
+  <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+  <script>
+    const cvData = `Wayne Kearns is a Senior IT Leader with extensive experience in technology strategy, compliance, and global transformation programs. He has led initiatives at FastTrack RTW and Novartis, specializing in AI-enabled systems, security frameworks, and operational agility.
+
+Education:
+- 2025: Professional Certificate, Strategy in the Age of AI and Digital Disruption – INSEAD
+- 2023: MSc in Business (Leadership & Management Practice) – UCD Michael Smurfit
+- 2022: Professional Diploma in Leadership Development – UCD Michael Smurfit
+- 2021: Professional Diploma in Organisational Change and Transformation – UCD Michael Smurfit
+- 2018: Professional Diploma in Strategic Growth (Biotech & Pharma) – UCD Michael Smurfit
+- 2012: MSc in Technology and Innovation Management – DIT
+- 2011: Postgrad Diploma in Management of Technology – DIT
+- 2009: Postgrad Diploma in International Sales – DIT
+- 2002: B.A. Business Studies – Griffith College
+- 1994: National Certificate in Instrument Physics – Galway RTC`;
+
+    function toggleChatbot() {
+      const bot = document.getElementById("chatbot");
+      bot.style.display = bot.style.display === "none" || !bot.style.display ? "flex" : "none";
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle("dark-mode");
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById("userInput");
+      const userMessage = input.value.trim();
+      if (!userMessage) return;
+
+      const chat = document.getElementById("chat");
+      chat.innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
+      input.value = "";
+
+      try {
+        const res = await fetch("/.netlify/functions/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt: `${cvData}\n\nQuestion: ${userMessage}` })
+        });
+        const data = await res.json();
+        chat.innerHTML += `<p><strong>Bot:</strong> ${data.response || "No response."}</p>`;
+        chat.scrollTop = chat.scrollHeight;
+      } catch (err) {
+        chat.innerHTML += `<p><strong>Bot:</strong> Error contacting server.</p>`;
+      }
+    }
+  </script>
+  <footer>&copy; 2025 Wayne Kearns</footer>
 </body>
 </html>
