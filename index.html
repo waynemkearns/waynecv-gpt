@@ -22,6 +22,119 @@
     </style>
 </head>
 <body>
-<!-- body omitted for brevity, see above canvas for full HTML -->
+    <header>
+        <h1>Wayne Kearns</h1>
+        <p>Senior IT Leader</p>
+        <br>
+        <img src="profile.jpg" alt="Wayne Kearns" style="width:120px;border-radius:60px;margin-top:10px;"><br>
+        <a href="https://linkedin.com/in/waynekearns" target="_blank" style="color:#fff;text-decoration:underline;">LinkedIn Profile</a>
+    </header>
+
+    <section>
+        <h2>About Me</h2>
+        <p>Senior IT Leader with experience in technology strategy, IT governance, and compliance across multinational companies. He led projects at FastTrack RTW (2023–2025) and Novartis (2015–2023), including AI-driven insurance tech and global infrastructure programs.</p>
+    </section>
+
+    <section>
+        <h2>Experience</h2>
+        <p><strong>FastTrack RTW</strong> - Head of Implementation (2023–2025)<br>
+        <strong>Novartis</strong> - Various Leadership Roles (2015–2023)</p>
+    </section>
+
+    <section>
+        <h2>Education</h2>
+        <ul>
+            <li>2025 – Professional Certificate, Strategy in the Age of AI and Digital Disruption – INSEAD</li>
+            <li>2023 – MSc in Business (Leadership & Management Practice) – UCD Michael Smurfit Graduate Business School</li>
+            <li>2022 – Professional Diploma in Leadership Development – UCD Michael Smurfit Graduate Business School</li>
+            <li>2021 – Professional Diploma in Organisational Change and Transformation – UCD Michael Smurfit Graduate Business School</li>
+            <li>2018 – Professional Diploma in Strategic Growth (Biotech & Pharma) – UCD Michael Smurfit Graduate Business School</li>
+            <li>2012 – MSc in Technology and Innovation Management – Dublin Institute of Technology</li>
+            <li>2011 – Postgraduate Diploma in Management of Technology – Dublin Institute of Technology</li>
+            <li>2009 – Postgraduate Diploma in International Sales – Dublin Institute of Technology</li>
+            <li>2002 – B.A. in Business Studies – Griffith College Dublin</li>
+            <li>1994 – National Certificate in Instrument Physics – Galway Regional Technical College</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Skills</h2>
+        <p>Strategic Planning, Change Management, ITSM, Agile, AI Fundamentals</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Wayne Kearns</p>
+    </footer>
+
+    <div class="chatbot" id="chatbot">
+        <p id="welcomeMessage" class="fade-in"><strong>Bot:</strong> Hi! I'm your CV assistant. Ask me anything about Wayne Kearns' experience, education, or skills.</p>
+        <div id="chat" style="max-height:200px;overflow-y:auto;margin-bottom:10px;"></div>
+        <input id="userInput" type="text" placeholder="Ask about Wayne's CV..." style="width:80%;" onkeydown="if(event.key === 'Enter') sendMessage();" />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    <button class="chatbot-toggle" onclick="toggleChatbot()">💬</button>
+
+    <script>
+        const cvData = `Wayne Kearns is a Senior IT Leader with extensive experience in technology strategy, IT governance, and security compliance across multinational organizations. He has led major programs at FastTrack RTW and Novartis. His education includes:
+- 2025: Professional Certificate, Strategy in the Age of AI and Digital Disruption – INSEAD
+- 2023: MSc in Business (Leadership & Management Practice) – UCD Michael Smurfit Graduate Business School
+- 2022: Professional Diploma in Leadership Development – UCD Michael Smurfit Graduate Business School
+- 2021: Professional Diploma in Organisational Change and Transformation – UCD Michael Smurfit Graduate Business School
+- 2018: Professional Diploma in Strategic Growth (Biotech & Pharma) – UCD Michael Smurfit Graduate Business School
+- 2012: MSc in Technology and Innovation Management – Dublin Institute of Technology
+- 2011: Postgraduate Diploma in Management of Technology – Dublin Institute of Technology
+- 2009: Postgraduate Diploma in International Sales – Dublin Institute of Technology
+- 2002: B.A. in Business Studies – Griffith College Dublin
+- 1994: National Certificate in Instrument Physics – Galway Regional Technical College.`;
+
+        async function sendToGPT(question) {
+            try {
+                const response = await fetch("/.netlify/functions/chat", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        prompt: `${cvData}
+
+Question: ${question}`
+                    })
+                });
+
+                if (!response.ok) {
+                    console.error("Server responded with status:", response.status);
+                    throw new Error("Server error");
+                }
+
+                const data = await response.json();
+                if (!data.response) {
+                    console.error("No 'response' field in API reply:", data);
+                    throw new Error("Malformed response");
+                }
+
+                return data.response;
+            } catch (error) {
+                console.error("Chatbot error:", error);
+                return "Sorry, I couldn’t reach the server. Please try again later.";
+            }
+        }
+
+        function toggleChatbot() {
+            const chatbot = document.getElementById('chatbot');
+            chatbot.style.display = chatbot.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function sendMessage() {
+            const input = document.getElementById("userInput");
+            const userMessage = input.value;
+            input.value = "";
+            const chat = document.getElementById("chat");
+            chat.innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
+            sendToGPT(userMessage).then(reply => {
+                chat.innerHTML += `<p><strong>Bot:</strong> ${reply}</p>`;
+                chat.scrollTop = chat.scrollHeight;
+            });
+        }
+    </script>
 </body>
 </html>
