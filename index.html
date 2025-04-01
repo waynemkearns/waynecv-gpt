@@ -186,6 +186,123 @@
   </style>
 </head>
 <body>
-  <!-- CONTENT TRUNCATED HERE FOR BREVITY -->
+  <div class="container">
+    <aside class="sidebar">
+      <img src="profile.jpg" alt="Wayne Kearns">
+      <h1>Wayne Kearns</h1>
+      <p>Senior IT Leader</p>
+      <a href="https://linkedin.com/in/waynekearns" target="_blank">LinkedIn Profile</a>
+    </aside>
+    <main class="main">
+      <section>
+        <h2>About Me</h2>
+        <p>Senior IT Leader with expertise in digital transformation, technology strategy, IT governance, and compliance in multinational corporations.</p>
+      </section>
+      <section>
+        <h2>Experience</h2>
+        <p><strong>FastTrack RTW (2023–2025)</strong><br>
+        Head of Implementation – Led the planning, development, and rollout of AI-powered chatbot and automated data intake systems for U.S. disability insurance clients. Oversaw technical teams and liaised with senior stakeholders to ensure compliance and efficiency. Integrated advanced data collection tools to streamline claim processing and improve user experience.</p>
+        <p><strong>Novartis (2015–2023)</strong><br>
+        Held multiple senior roles leading IT and business strategy initiatives across global divisions. Managed international teams and drove enterprise-wide transformations in cloud migration, cybersecurity, operational performance, and digital analytics. Partnered with regulatory and legal functions to ensure IT governance alignment across 60+ countries.</p>
+      </section>
+      <section>
+        <h2>Education</h2>
+        <ul>
+          <li>2025 – Professional Certificate, Strategy in the Age of AI and Digital Disruption – INSEAD</li>
+          <li>2023 – MSc in Business (Leadership & Management Practice) – UCD Michael Smurfit Graduate Business School</li>
+          <li>2022 – Professional Diploma in Leadership Development – UCD Michael Smurfit Graduate Business School</li>
+          <li>2021 – Professional Diploma in Organisational Change and Transformation – UCD Michael Smurfit Graduate Business School</li>
+          <li>2018 – Professional Diploma in Strategic Growth (Biotech & Pharma) – UCD Michael Smurfit Graduate Business School</li>
+          <li>2012 – MSc in Technology and Innovation Management – Dublin Institute of Technology</li>
+          <li>2011 – Postgraduate Diploma in Management of Technology – Dublin Institute of Technology</li>
+          <li>2009 – Postgraduate Diploma in International Sales – Dublin Institute of Technology</li>
+          <li>2002 – B.A. in Business Studies – Griffith College Dublin</li>
+          <li>1994 – National Certificate in Instrument Physics – Galway Regional Technical College</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Skills</h2>
+        <p>Strategic Planning, Change Management, ITSM, Agile, AI Fundamentals</p>
+      </section>
+    </main>
+  </div>
+
+  <div class="chat-suggestions">
+    <p><strong>Try asking:</strong></p>
+    <ul>
+      <li onclick="setExample('Where did Wayne study?')">Where did Wayne study?</li>
+      <li onclick="setExample('What experience does Wayne have with AI?')">What experience does Wayne have with AI?</li>
+      <li onclick="setExample('Tell me about Wayne\'s role at Novartis.')">Tell me about Wayne's role at Novartis.</li>
+      <li onclick="setExample('What are Wayne’s top skills?')">What are Wayne’s top skills?</li>
+      <li onclick="setExample('What did Wayne study at UCD Smurfit?')">What did Wayne study at UCD Smurfit?</li>
+    </ul>
+  </div>
+
+  <div class="chatbot" id="chatbot">
+    <header>Wayne’s CV Assistant</header>
+    <div class="chat-body" id="chat"></div>
+    <input id="userInput" placeholder="Ask about Wayne's CV..." onkeydown="if(event.key === 'Enter') sendMessage()" />
+  </div>
+
+  <button class="chatbot-toggle" onclick="toggleChatbot()">💬</button>
+  <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+
+  <script>
+    const cvData = `Wayne Kearns is a Senior IT Leader with extensive experience in technology strategy, compliance, and global transformation programs. He has led initiatives at FastTrack RTW and Novartis, specializing in AI-enabled systems, security frameworks, and operational agility.
+
+Education:
+- 2025: Professional Certificate, Strategy in the Age of AI and Digital Disruption – INSEAD
+- 2023: MSc in Business (Leadership & Management Practice) – UCD Michael Smurfit
+- 2022: Professional Diploma in Leadership Development – UCD Michael Smurfit
+- 2021: Professional Diploma in Organisational Change and Transformation – UCD Michael Smurfit
+- 2018: Professional Diploma in Strategic Growth (Biotech & Pharma) – UCD Michael Smurfit
+- 2012: MSc in Technology and Innovation Management – DIT
+- 2011: Postgrad Diploma in Management of Technology – DIT
+- 2009: Postgrad Diploma in International Sales – DIT
+- 2002: B.A. Business Studies – Griffith College
+- 1994: National Certificate in Instrument Physics – Galway RTC`;
+
+    function toggleChatbot() {
+      const bot = document.getElementById("chatbot");
+      if (bot) {
+        bot.style.display = bot.style.display === "none" || !bot.style.display ? "flex" : "none";
+      }
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle("dark-mode");
+    }
+
+    function setExample(question) {
+      const input = document.getElementById("userInput");
+      input.value = question;
+      input.focus();
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById("userInput");
+      const userMessage = input.value.trim();
+      if (!userMessage) return;
+
+      const chat = document.getElementById("chat");
+      chat.innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
+      input.value = "";
+
+      try {
+        const res = await fetch("/.netlify/functions/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt: `${cvData}\n\nQuestion: ${userMessage}` })
+        });
+        const data = await res.json();
+        chat.innerHTML += `<p><strong>Bot:</strong> ${data.response || "No response."}</p>`;
+        chat.scrollTop = chat.scrollHeight;
+      } catch (err) {
+        chat.innerHTML += `<p><strong>Bot:</strong> Error contacting server.</p>`;
+      }
+    }
+  </script>
+  <footer>&copy; 2025 Wayne Kearns</footer>
 </body>
 </html>
+
